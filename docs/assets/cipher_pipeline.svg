@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 680" width="100%" height="100%" style="background-color: #0d1117; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1f6feb" />
+      <stop offset="100%" stop-color="#388bfd" />
+    </linearGradient>
+    <linearGradient id="purpleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8957e5" />
+      <stop offset="100%" stop-color="#a371f7" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d29922" />
+      <stop offset="100%" stop-color="#f0883e" />
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#238636" />
+      <stop offset="100%" stop-color="#3fb950" />
+    </linearGradient>
+    <marker id="arr" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#58a6ff" />
+    </marker>
+    <marker id="arr-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#f0883e" />
+    </marker>
+    <marker id="arr-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 8 5 L 0 9 z" fill="#3fb950" />
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <g transform="translate(480, 35)" text-anchor="middle">
+    <text font-size="20" font-weight="bold" fill="#f0f6fc">Hybrid LFSR-ARX Stream Cipher: End-to-End Pipeline</text>
+    <text y="22" font-size="12" fill="#8b949e">5-Phase Continuous Architectural Workflow with Forward Secrecy Re-Keying</text>
+  </g>
+
+  <!-- Phase 1: Inputs -->
+  <g transform="translate(180, 85)">
+    <rect width="240" height="50" rx="8" fill="#161b22" stroke="#388bfd" stroke-width="1.5" />
+    <text x="120" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">Register A: 127-Bit IV (Nonce)</text>
+    <text x="120" y="40" text-anchor="middle" font-size="10" fill="#8b949e">Primitive Taps: &#123;0, 112, 120, 123&#125;</text>
+  </g>
+
+  <g transform="translate(540, 85)">
+    <rect width="240" height="50" rx="8" fill="#161b22" stroke="#a371f7" stroke-width="1.5" />
+    <text x="120" y="24" text-anchor="middle" font-size="13" font-weight="bold" fill="#bc8cff">Register B: 131-Bit Secret Key</text>
+    <text x="120" y="40" text-anchor="middle" font-size="10" fill="#8b949e">Primitive Taps: &#123;0, 121, 124, 129&#125;</text>
+  </g>
+
+  <!-- Connectors into Phase 2 -->
+  <line x1="300" y1="135" x2="300" y2="175" stroke="#58a6ff" stroke-width="2" marker-end="url(#arr)" />
+  <line x1="660" y1="135" x2="660" y2="175" stroke="#bc8cff" stroke-width="2" marker-end="url(#arr)" />
+
+  <!-- Phase 2 Box -->
+  <g transform="translate(140, 180)">
+    <rect width="680" height="75" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="8" height="75" rx="4" fill="url(#blueGrad)" />
+    <text x="30" y="28" font-size="14" font-weight="bold" fill="#f0f6fc">Phase 2: Cross-Feedback Mixing (550 Warm-Up Rounds)</text>
+    <text x="30" y="48" font-size="11" fill="#8b949e">&#x2022; Dual LFSR linear updates using primitive polynomial feedback taps</text>
+    <text x="30" y="64" font-size="11" fill="#8b949e">&#x2022; Non-linear boolean injection F(x, y, z, w) = (xy) &#x2295; (zw) &#x2295; (x &#x2295; z) on cross-register bits</text>
+    <rect x="530" y="22" width="130" height="30" rx="6" fill="#21262d" stroke="#58a6ff" stroke-width="1" />
+    <text x="595" y="42" text-anchor="middle" font-size="11" font-weight="bold" fill="#58a6ff">258-Bit Output</text>
+  </g>
+
+  <!-- Connector to Phase 3 -->
+  <line x1="480" y1="255" x2="480" y2="295" stroke="#58a6ff" stroke-width="2" marker-end="url(#arr)" />
+  <text x="490" y="280" font-size="10" fill="#8b949e">Truncate to 256 bits (8 &#xD7; 32b)</text>
+
+  <!-- Phase 3 Box -->
+  <g transform="translate(140, 300)">
+    <rect width="680" height="75" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="8" height="75" rx="4" fill="url(#purpleGrad)" />
+    <text x="30" y="28" font-size="14" font-weight="bold" fill="#f0f6fc">Phase 3: 32-Bit Butterfly Diffusion Network (SAS Block)</text>
+    <text x="30" y="48" font-size="11" fill="#8b949e">&#x2022; Pass 1 (Adjacent Pairs, ROTL 7)  &#x2192;  Pass 2 (Cross Pairs, ROTL 11)  &#x2192;  Pass 3 (Wide Pairs, ROTL 13)</text>
+    <text x="30" y="64" font-size="11" fill="#8b949e">&#x2022; Multi-stride modular addition diffusion ensuring avalanche across all 8 words</text>
+    <rect x="530" y="22" width="130" height="30" rx="6" fill="#21262d" stroke="#bc8cff" stroke-width="1" />
+    <text x="595" y="42" text-anchor="middle" font-size="11" font-weight="bold" fill="#bc8cff">256-Bit Diffused</text>
+  </g>
+
+  <!-- Connector to Phase 4 -->
+  <line x1="480" y1="375" x2="480" y2="415" stroke="#58a6ff" stroke-width="2" marker-end="url(#arr)" />
+
+  <!-- Phase 4 Box -->
+  <g transform="translate(140, 420)">
+    <rect width="680" height="60" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5" />
+    <rect x="0" y="0" width="8" height="60" rx="4" fill="url(#orangeGrad)" />
+    <text x="30" y="26" font-size="14" font-weight="bold" fill="#f0f6fc">Phase 4: Feed-Forward &amp; EKey Generation</text>
+    <text x="30" y="46" font-size="11" fill="#8b949e">&#x2022; EKey = Phase2_State &#x2295; Phase3_Diffused (One-way non-reversible function)</text>
+    <rect x="530" y="15" width="130" height="30" rx="6" fill="#21262d" stroke="#f0883e" stroke-width="1" />
+    <text x="595" y="35" text-anchor="middle" font-size="11" font-weight="bold" fill="#f0883e">256-Bit EKey</text>
+  </g>
+
+  <!-- Fork: Forward Secrecy Loop vs Keystream Gen -->
+  <!-- Left path: Re-Keying -->
+  <path d="M 240 480 L 240 520 L 70 520 L 70 217 L 132 217" stroke="#f0883e" stroke-width="2" stroke-dasharray="5,4" fill="none" marker-end="url(#arr-orange)" />
+  <rect x="35" y="340" width="110" height="42" rx="6" fill="#161b22" stroke="#f0883e" stroke-width="1" />
+  <text x="90" y="356" text-anchor="middle" font-size="10" font-weight="bold" fill="#f0883e">FORWARD SECRECY</text>
+  <text x="90" y="371" text-anchor="middle" font-size="8" fill="#8b949e">Pad to 258b &amp; Re-Key</text>
+
+  <!-- Right path: Phase 5 Keystream Generation -->
+  <line x1="600" y1="480" x2="600" y2="520" stroke="#58a6ff" stroke-width="2" marker-end="url(#arr)" />
+
+  <!-- Phase 5 Box -->
+  <g transform="translate(360, 525)">
+    <rect width="460" height="75" rx="10" fill="#161b22" stroke="#238636" stroke-width="1.5" />
+    <rect x="0" y="0" width="8" height="75" rx="4" fill="url(#greenGrad)" />
+    <text x="25" y="26" font-size="13" font-weight="bold" fill="#f0f6fc">Phase 5: Double-ARX Keystream Generation</text>
+    <text x="25" y="44" font-size="10" fill="#8b949e">&#x2022; Counter Mode: 128 Blocks &#xD7; 256 bits = 32 Kb (4096 bytes) payload</text>
+    <text x="25" y="60" font-size="10" fill="#8b949e">&#x2022; 10 rounds of two-way ARX column mixing &amp; diagonal word swapping</text>
+  </g>
+
+  <!-- Final Output Payload -->
+  <line x1="590" y1="600" x2="590" y2="630" stroke="#3fb950" stroke-width="2" marker-end="url(#arr-green)" />
+  <g transform="translate(470, 635)">
+    <rect width="240" height="32" rx="6" fill="#238636" fill-opacity="0.2" stroke="#3fb950" stroke-width="1.5" />
+    <text x="120" y="21" text-anchor="middle" font-size="12" font-weight="bold" fill="#3fb950">&#x2714; 32 Kb Keystream Buffer (4 KB)</text>
+  </g>
+</svg>

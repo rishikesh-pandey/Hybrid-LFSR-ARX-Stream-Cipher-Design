@@ -1,0 +1,433 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1260" width="100%" height="100%" style="background-color: #0d1117; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+<defs>
+      <linearGradient id="headerGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#388bfd" />
+        <stop offset="100%" stop-color="#a371f7" />
+      </linearGradient>
+      <linearGradient id="wordGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#21262d" />
+        <stop offset="100%" stop-color="#161b22" />
+      </linearGradient>
+      <linearGradient id="addGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#1f6feb" />
+        <stop offset="100%" stop-color="#238636" />
+      </linearGradient>
+      <linearGradient id="rotGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#d29922" />
+        <stop offset="100%" stop-color="#f0883e" />
+      </linearGradient>
+      <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 8 5 L 0 9 z" fill="#58a6ff" />
+      </marker>
+      <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M 0 1 L 8 5 L 0 9 z" fill="#3fb950" />
+      </marker>
+      <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
+        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+      </filter>
+    </defs>
+
+    <g transform="translate(500, 35)" text-anchor="middle">
+      <text font-size="22" font-weight="bold" fill="#f0f6fc">Phase 3: 32-Bit Butterfly Diffusion Network (SAS Block)</text>
+      <text y="24" font-size="13" fill="#8b949e">Bit-Exact Architecture of the 8-Word Modular Addition &amp; Multi-Stride Rotational Diffusion Layer</text>
+    </g>
+
+        <rect x="25" y="135" width="950" height="185" rx="10" fill="#388bfd" fill-opacity="0.04" stroke="#388bfd" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="6,4" />
+        <rect x="40" y="124" width="500" height="22" rx="5" fill="#161b22" stroke="#388bfd" stroke-width="1" />
+        <text x="50" y="140" font-size="11" font-weight="bold" fill="#388bfd">PASS 1: Stride 1 (Adjacent Pairs: W_i += W_{i+1})  &amp;  ROTL 7</text>
+        
+
+        <rect x="25" y="340" width="950" height="275" rx="10" fill="#a371f7" fill-opacity="0.04" stroke="#a371f7" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="6,4" />
+        <rect x="40" y="329" width="500" height="22" rx="5" fill="#161b22" stroke="#a371f7" stroke-width="1" />
+        <text x="50" y="345" font-size="11" font-weight="bold" fill="#a371f7">PASS 2: Stride 2 (Cross Pairs: W_i += W_{i+2})  &amp;  ROTL 11</text>
+        
+
+        <rect x="25" y="635" width="950" height="385" rx="10" fill="#f0883e" fill-opacity="0.04" stroke="#f0883e" stroke-opacity="0.3" stroke-width="1.5" stroke-dasharray="6,4" />
+        <rect x="40" y="624" width="500" height="22" rx="5" fill="#161b22" stroke="#f0883e" stroke-width="1" />
+        <text x="50" y="640" font-size="11" font-weight="bold" fill="#f0883e">PASS 3: Stride 4 (Wide Pairs: W_i += W_{i+4})  &amp;  ROTL 13</text>
+        
+<g id="inputs">
+
+        <g transform="translate(58, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_0 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+
+        <g transform="translate(168, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_1 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+
+        <g transform="translate(278, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_2 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+
+        <g transform="translate(388, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_3 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+
+        <g transform="translate(498, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_4 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+
+        <g transform="translate(608, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_5 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+
+        <g transform="translate(718, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_6 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+
+        <g transform="translate(828, 80)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_7 (In)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">32-bit</text>
+        </g>
+</g>
+<line x1="100" y1="118" x2="100" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(100, 175)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="210" cy="175" r="3.5" fill="#3fb950" />
+<path d="M 210 175 L 113 175" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(70, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="100" y1="262" x2="100" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="210" y1="118" x2="210" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(180, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="210" y1="262" x2="210" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="320" y1="118" x2="320" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(320, 175)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="430" cy="175" r="3.5" fill="#3fb950" />
+<path d="M 430 175 L 333 175" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(290, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="320" y1="262" x2="320" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="430" y1="118" x2="430" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(400, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="430" y1="262" x2="430" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="540" y1="118" x2="540" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(540, 175)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="650" cy="175" r="3.5" fill="#3fb950" />
+<path d="M 650 175 L 553 175" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(510, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="540" y1="262" x2="540" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="650" y1="118" x2="650" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(620, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="650" y1="262" x2="650" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="760" y1="118" x2="760" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(760, 175)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="870" cy="175" r="3.5" fill="#3fb950" />
+<path d="M 870 175 L 773 175" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(730, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="760" y1="262" x2="760" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="870" y1="118" x2="870" y2="238" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(840, 238)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 7</text>
+        </g>
+<line x1="870" y1="262" x2="870" y2="300" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="100" y1="300" x2="100" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="210" y1="300" x2="210" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="320" y1="300" x2="320" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="430" y1="300" x2="430" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="540" y1="300" x2="540" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="650" y1="300" x2="650" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="760" y1="300" x2="760" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="870" y1="300" x2="870" y2="503" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(100, 380)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="320" cy="380" r="3.5" fill="#3fb950" />
+<path d="M 320 380 L 113 380" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(210, 425)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="430" cy="425" r="3.5" fill="#3fb950" />
+<path d="M 430 425 L 223 425" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(540, 380)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="760" cy="380" r="3.5" fill="#3fb950" />
+<path d="M 760 380 L 553 380" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(650, 425)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="870" cy="425" r="3.5" fill="#3fb950" />
+<path d="M 870 425 L 663 425" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(70, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="100" y1="527" x2="100" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(180, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="210" y1="527" x2="210" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(290, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="320" y1="527" x2="320" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(400, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="430" y1="527" x2="430" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(510, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="540" y1="527" x2="540" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(620, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="650" y1="527" x2="650" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(730, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="760" y1="527" x2="760" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(840, 503)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 11</text>
+        </g>
+<line x1="870" y1="527" x2="870" y2="565" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="100" y1="565" x2="100" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="210" y1="565" x2="210" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="320" y1="565" x2="320" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="430" y1="565" x2="430" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="540" y1="565" x2="540" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="650" y1="565" x2="650" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="760" y1="565" x2="760" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+<line x1="870" y1="565" x2="870" y2="893" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(100, 675)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="540" cy="675" r="3.5" fill="#3fb950" />
+<path d="M 540 675 L 113 675" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(210, 725)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="650" cy="725" r="3.5" fill="#3fb950" />
+<path d="M 650 725 L 223 725" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(320, 775)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="760" cy="775" r="3.5" fill="#3fb950" />
+<path d="M 760 775 L 333 775" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(430, 825)">
+          <circle r="13" fill="#161b22" stroke="#3fb950" stroke-width="2" />
+          <path d="M -7 0 L 7 0 M 0 -7 L 0 7" stroke="#3fb950" stroke-width="2" stroke-linecap="round" />
+        </g>
+<circle cx="870" cy="825" r="3.5" fill="#3fb950" />
+<path d="M 870 825 L 443 825" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" fill="none" />
+
+        <g transform="translate(70, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="100" y1="917" x2="100" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(180, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="210" y1="917" x2="210" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(290, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="320" y1="917" x2="320" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(400, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="430" y1="917" x2="430" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(510, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="540" y1="917" x2="540" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(620, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="650" y1="917" x2="650" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(730, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="760" y1="917" x2="760" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+
+        <g transform="translate(840, 893)">
+          <rect width="60" height="24" rx="5" fill="#21262d" stroke="#d29922" stroke-width="1.5" />
+          <text x="30" y="16" text-anchor="middle" font-size="11" font-weight="bold" fill="#e3b341">&#x22D8; 13</text>
+        </g>
+<line x1="870" y1="917" x2="870" y2="965" stroke="#58a6ff" stroke-width="1.5" />
+<g id="outputs">
+
+        <g transform="translate(58, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_0 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+
+        <g transform="translate(168, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_1 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+
+        <g transform="translate(278, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_2 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+
+        <g transform="translate(388, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_3 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+
+        <g transform="translate(498, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_4 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+
+        <g transform="translate(608, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_5 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+
+        <g transform="translate(718, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_6 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+
+        <g transform="translate(828, 965)">
+          <rect width="84" height="38" rx="6" fill="url(#wordGrad)" stroke="#30363d" stroke-width="1.5" />
+          <text x="42" y="18" text-anchor="middle" font-size="13" font-weight="bold" fill="#58a6ff">W_7 (Out)</text>
+          <text x="42" y="32" text-anchor="middle" font-size="9" fill="#8b949e">Diffused</text>
+        </g>
+</g>
+
+    <g transform="translate(50, 1045)">
+      <rect width="900" height="175" rx="10" fill="#161b22" stroke="#30363d" stroke-width="1.5" />
+      
+      <!-- Column 1: Symbols -->
+      <text x="25" y="28" font-size="13" font-weight="bold" fill="#f0f6fc">Legend &amp; Primitive Operations</text>
+      
+      <circle cx="35" cy="55" r="9" fill="#161b22" stroke="#3fb950" stroke-width="1.5" />
+      <path d="M 30 55 L 40 55 M 35 50 L 35 60" stroke="#3fb950" stroke-width="1.5" stroke-linecap="round" />
+      <text x="55" y="59" font-size="12" fill="#c9d1d9"><tspan font-weight="bold" fill="#3fb950">&#x229E; Modular Addition:</tspan> W_i = (W_i + W_j) mod 2&#179;&#178; (ARX non-linear diffusion)</text>
+      
+      <rect x="25" y="78" width="45" height="18" rx="4" fill="#21262d" stroke="#d29922" stroke-width="1.2" />
+      <text x="47" y="91" text-anchor="middle" font-size="10" font-weight="bold" fill="#e3b341">&#x22D8; n</text>
+      <text x="80" y="91" font-size="12" fill="#c9d1d9"><tspan font-weight="bold" fill="#e3b341">&#x22D8; Bitwise Left Rotation:</tspan> Circular shift by 7, 11, or 13 bits</text>
+      
+      <line x1="25" y1="120" x2="60" y2="120" stroke="#3fb950" stroke-width="1.5" marker-end="url(#arrow-green)" />
+      <circle cx="25" cy="120" r="3" fill="#3fb950" />
+      <text x="75" y="124" font-size="12" fill="#c9d1d9"><tspan font-weight="bold" fill="#58a6ff">Cross-Word Injection Wire:</tspan> Source word tapped without mutation</text>
+
+      <!-- Column 2: Architectural Clarity Note -->
+      <line x1="500" y1="15" x2="500" y2="160" stroke="#21262d" stroke-width="1.5" />
+      <text x="525" y="28" font-size="13" font-weight="bold" fill="#58a6ff">Note on Implementation &amp; Hand-Drawn Draft (Page 6)</text>
+      
+      <text x="525" y="52" font-size="11" fill="#8b949e">&#x2022; <tspan fill="#f0f6fc" font-weight="600">Elimination of S-Boxes:</tspan> The initial draft sketched placeholder [S] boxes.</text>
+      <text x="535" y="68" font-size="11" fill="#8b949e">  In the hardened implementation, S-boxes were omitted in favor of pure ARX</text>
+      <text x="535" y="82" font-size="11" fill="#8b949e">  operations to eliminate table-lookup cache timing side-channels.</text>
+      
+      <text x="525" y="105" font-size="11" fill="#8b949e">&#x2022; <tspan fill="#f0f6fc" font-weight="600">Accurate Wire Topologies:</tspan> The hand-drawn draft missed connections in</text>
+      <text x="535" y="121" font-size="11" fill="#8b949e">  Pass 2 and Pass 3. This diagram strictly reflects the exact C++ and Python</text>
+      <text x="535" y="137" font-size="11" fill="#8b949e">  code execution (verified 100% congruent across passes).</text>
+    </g>
+</svg>
